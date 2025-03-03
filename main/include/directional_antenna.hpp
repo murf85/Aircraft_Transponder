@@ -4,7 +4,6 @@
 #include "cadmium/modeling/devs/atomic.hpp"
 #include <iostream>
 
-
 using namespace cadmium;
 
 struct DirectionalAntennaState {
@@ -27,8 +26,6 @@ class DirectionalAntenna : public Atomic<DirectionalAntennaState> {
     Port<double> directional_out;
     Port<bool> cue_omni_out;
 
-
-    //Declare your ports here
     DirectionalAntenna(const std::string id) : Atomic<DirectionalAntennaState>(id, DirectionalAntennaState()) {
         cue_omni_out = addOutPort<bool>("Directional - Cue to omni out");                       //Cue the omni antenna for sidelobe suppression pulse
         directional_out = addOutPort<double>("Directional - Interrogation pulse out");          //Interrogation pulse to the aircraft
@@ -52,7 +49,7 @@ class DirectionalAntenna : public Atomic<DirectionalAntennaState> {
     // output function
     void output(const DirectionalAntennaState& state) const override {
         directional_out->addMessage(state.outputpower);
-        //check if pulse is P1
+        //check if pulse is P1 or sidelobe suppression
         if(state.outputpower == 0.1){    
             cue_omni_out->addMessage(true);
         }
