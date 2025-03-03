@@ -6,11 +6,9 @@
 
 using namespace cadmium;
 
-
 struct AltimeterState {
     double sigma;
     int altitude;
-    //you can have as many state variables as you want/ need
 
     explicit AltimeterState(): sigma(std::numeric_limits<double>::infinity()),altitude(0){
     }
@@ -28,11 +26,10 @@ class Altimeter : public Atomic<AltimeterState> {
     Port<int> altitude_in;     //altitude in from the iestream
     Port<bool> altreq_in;     //Request to send updated altimeter altitude from transponder
 
-
     Altimeter(const std::string id) : Atomic<AltimeterState>(id, AltimeterState()) {
         altreq_in = addInPort<bool>("Altimeter - Request in"); //input port for new altimeter request from transponder
         altitude_in = addInPort<int>("Altimeter - Altitude in"); //input port for new altimeter altitude
-        newalt_out = addOutPort<int>("Altimeter - Altitude Out"); //output port for altimeter altitudes
+        newalt_out = addOutPort<int>("Altimeter - Altitude Out"); //output port for altimeter altitude
     }
 
     // inernal transition
@@ -46,6 +43,7 @@ class Altimeter : public Atomic<AltimeterState> {
             state.altitude = altitude_in->getBag().back(); 
             state.sigma = std::numeric_limits<double>::infinity();
           }
+        
         if(!altreq_in -> empty()) {
             state.sigma = 0; 
         }
