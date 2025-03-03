@@ -60,7 +60,6 @@ class Transponder : public Atomic<TransponderState> {
         }
     }   
 
-
     // external transition
     void externalTransition(TransponderState& state, double e) const override {
         if(!newalt_in->empty()){
