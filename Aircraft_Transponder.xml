@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Models>
+	<Model name="aircraft_transponder_top" type="coupled" description="Model of a secondary search radar and aircraft transponder interrogation and reply">
+		<Inputs>
+		</Inputs>
+		<Outputs>
+			<Port name="reply_out" type="int" description="Send the reply out of the model to ATC"/>
+		</Outputs>
+		<Files>
+			<File name="main_aircraft_transponder.cpp" type="CPP" location="/main"/>
+			<File name="aircraft_transponder_top.hpp" type="HPP" location="/main/include"/>
+			<File name="altitude.txt" type="TXT" location="/main/input_data"/>
+			<File name="directional.txt" type="TXT" location="/main/input_data"/>
+			<File name="modeA.txt" type="TXT" location="/main/input_data"/>
+		</Files>
+	</Model>
+	<Model name="aircraft" type="coupled" description="Model representing an aircraft">
+		<Inputs>
+			<Port name="ac_directional_in" type="double" description="Interrogation from directional antenna"/>
+			<Port name="ac_omni_in" type="double" description="Sidelobe suppression signal from omni antenna"/>
+			<Port name="ac_modeA_in" type="int" description="New pilot input Mode A code from IEStream."/>
+			<Port name="ac_altimeter_in" type="int" description="New altimeter altitude from IEStream"/>
+		</Inputs>
+		<Outputs>
+			<Port name="ac_reply_out" type="int" description="Transponder reply back to radar."/>
+		</Outputs>
+		<Files>
+			<File name="aircraft.hpp" type="HPP" location="/main/include"/>
+		</Files>
+	</Model>
+	<Model name="radar" type="coupled" description="Model representing a secondary search radar">
+		<Inputs>
+			<Port name="directional_file_in" type="double" description="IEStream input of interrogation signals for directional antenna"/>
+			<Port name="radar_reply_in" type="int" description="Reply from aircraft back to the radar"/>	
+		</Inputs>
+		<Outputs>
+			<Port name="radar_directional_out" type="double" description="Interrogation signal from directional antenna out"/>
+			<Port name="radar_omni_out" type="int" description="Sidelobe suppression signal from omni antenna out"/>
+			<Port name="radar_reply_out" type="int" description="Sends the reply out to ATC"/>
+		</Outputs>
+		<Files>
+			<File name="radar.hpp" type="HPP" location="/main/include"/>
+		</Files>
+	</Model>
+	<Model name="directional_antenna" type="atomic" description="Model representing a directional antenna">
+		<Inputs>
+			<Port name="interrogation_list_in" type="double" description="Status of missile (1: hit or 0: miss)."/>
+		</Inputs>
+		<Outputs>
+			<Port name="cue_omni_out" type="bool" description="Cue the omni antenna"/>
+			<Port name="directional_out" type="double" description="Output interrogation signal to aircraft"/>
+		</Outputs>
+		<Files>
+			<File name="directional_antenna.hpp" type="HPP" location="/main/include" />
+		</Files>
+	</Model>
+	<Model name="omni_antenna" type="atomic" description="Model of the radar's omni-directional antenna">
+		<Inputs>
+			<Port name="cue_omni_in" type="bool" description="Message from directional antenna to send sidelobe suppression pulse"/>
+		</Inputs>
+		<Outputs>
+			<Port name="omni_out" type="double" description="Sidelobe suppression pulse P2"/>
+		</Outputs>
+		<Files>
+			<File name="omni_antenna.hpp" type="HPP" location="/main/include" />
+		</Files>
+	</Model>
+	<Model name="receive_antenna" type="atomic" description="Model representing the radar's receive antenna">
+		<Inputs>
+			<Port name="reply_in" type="int" description="Receives the reply from the transponder"/>
+		</Inputs>
+			<Port name="reply_out" type="int" description="Sends the reply to ATC"/>
+		<Outputs>
+		</Outputs>
+		<Files>
+			<File name="receive_antenna.hpp" type="HPP" location="/main/include" />
+		</Files>
+	</Model>
+	<Model name="transponder" type="atomic" description="Model representing an aircraft transponder">
+		<Inputs>
+			<Port name="directional_in" type="double" description="Receive the interrogation from the directional antenna"/>
+			<Port name="omni_in" type="double" description="Receive the sidelobe suppression signal from the omni antenna."/>
+			<Port name="newalt_in" type="int" description="Receive the new altitude from the altimeter"/>
+			<Port name="modeA_in" type="int" description="IEStream input of new Mode A code"/>
+		</Inputs>
+		<Outputs>
+			<Port name="altreq_out" type="bool" description="Send a request to the altimeter for the currect altitude"/>		
+			<Port name="reply_out" type="int" description="Reply to the radar interrogation request"/>	
+		</Outputs>
+		<Files>
+			<File name="transponder.hpp" type="HPP" location="/main/include"/>
+		</Files>
+	</Model>
+		<Model name="altimeter" type="atomic" description="Model representing an aircraft's encoding altimeter">
+		<Inputs>
+			<Port name="altitude_in" type="int" description="IEStream input of new altimeter reading"/>
+			<Port name="altreq_in" type="bool" description="Request for new altimeter altitude from transponder"/>
+		</Inputs>
+		<Outputs>
+			<Port name="newalt_out" type="int" description="Altimeter altitude out to transponder"/>			
+		</Outputs>
+		<Files>
+			<File name="altimeter.hpp" type="HPP" location="/main/include" />
+		</Files>
+	</Model>
+</Models>
