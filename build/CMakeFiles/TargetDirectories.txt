@@ -1,5 +1,0 @@
-/home/murf85/cadmium_v2/include/Aircraft_Transponder/build/CMakeFiles/edit_cache.dir
-/home/murf85/cadmium_v2/include/Aircraft_Transponder/build/CMakeFiles/rebuild_cache.dir
-/home/murf85/cadmium_v2/include/Aircraft_Transponder/build/main/CMakeFiles/aircraft_transponder_top.dir
-/home/murf85/cadmium_v2/include/Aircraft_Transponder/build/main/CMakeFiles/edit_cache.dir
-/home/murf85/cadmium_v2/include/Aircraft_Transponder/build/main/CMakeFiles/rebuild_cache.dir
