@@ -7,7 +7,6 @@
 #include "directional_antenna.hpp"                //directional atomic model file
 #include "receive_antenna.hpp"                    //receive atomic model file
 
-
 using namespace cadmium;
 
 struct Radar: public Coupled {
@@ -30,7 +29,6 @@ struct Radar: public Coupled {
     radar_reply_out = addOutPort<int>("Radar - Transponder reply to ATC out");
 
     //Internal Couplings
-    
     addCoupling(directional_antenna_model->cue_omni_out, omni_antenna_model->cue_omni_in);
     
     //External Couplings
@@ -40,8 +38,6 @@ struct Radar: public Coupled {
     addCoupling(directional_file_in, directional_antenna_model->interrogation_list_in);
     addCoupling(receive_antenna_model->out_to_atc, radar_reply_out);
   }
-
 };
-
 
 #endif
