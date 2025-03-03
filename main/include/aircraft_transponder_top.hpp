@@ -21,9 +21,9 @@ struct Transponder_top : public Coupled {
        
         reply_out = addOutPort<int>("Top - Transponder reply to ATC");
 
-        auto modeAgen = addComponent<lib::IEStream<int>>("IEStream Mode A generator file", "/home/murf85/cadmium_v2/include/Aircraft_Transponder/input_data/modeA.txt");
-        auto altitudegen = addComponent<lib::IEStream<int>>("IEStream Altitude generator file", "/home/murf85/cadmium_v2/include/Aircraft_Transponder/input_data/altitude.txt");
-        auto directional_file = addComponent<lib::IEStream<double>>("IEStream Directional Antenna", "/home/murf85/cadmium_v2/include/Aircraft_Transponder/input_data/directional.txt");
+        auto modeAgen = addComponent<lib::IEStream<int>>("IEStream Mode A generator file", "//absolute path here ... /Aircraft_Transponder/input_data/modeA.txt");
+        auto altitudegen = addComponent<lib::IEStream<int>>("IEStream Altitude generator file", "//absolute path here ... /Aircraft_Transponder/input_data/altitude.txt");
+        auto directional_file = addComponent<lib::IEStream<double>>("IEStream Directional Antenna", "//absolute path here ... /Aircraft_Transponder/input_data/directional.txt");
 
         addCoupling(modeAgen->out, aircraft_model->ac_modeA_in);
         addCoupling(altitudegen->out, aircraft_model->ac_altimeter_in);
